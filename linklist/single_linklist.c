@@ -143,7 +143,7 @@ void Bubble_Sort(ND **node)
 				tmp = curr -> next;
 				curr -> next = tmp -> next;
 				tmp -> next = curr;
-				if(curr == head){
+				if(curr == *node){
 					*node = tmp;
 					prev = tmp;
 				}
