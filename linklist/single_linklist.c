@@ -12,6 +12,7 @@ void Delete_Node(ND **node , int data);
 int IsEmpty(ND *node);
 int List_Length(ND *node);
 void list(ND *node);
+void Bubble_Sort(ND **node);
 
 ND *head = NULL;
 ND *tail = NULL;
@@ -23,10 +24,11 @@ int main()
 	creat_Node(&node);
 	insert_Node(&node , 10);
 	insert_Node(&node, 20);	
-	insert_Node(&node, 5);
+	insert_Node(&node, 15);
+	insert_Node(&node, 35);
+	Bubble_Sort(&node); //louis
 	list(node);
 	printf("link list length = %d\n",List_Length(node) );
-	printf("Is Empty = %d\n", IsEmpty(node));
 	Delete_Node(&node, 20);
 	insert_Node(&node , 100);
 	insert_Node(&node , 50);
@@ -36,7 +38,6 @@ int main()
 	Delete_Node(&node, 50);	
 	list(node);
 	printf("link list length = %d\n",List_Length(node) );
-	printf("Is Empty = %d\n", IsEmpty(node));
 	
 	return 0;
 }
@@ -117,4 +118,46 @@ void list(ND *node)
 		temp = temp -> next;
 	}
 	printf("NULL \n");
+}
+
+void swap(ND *a, ND *b)
+{
+	int tmp = a -> data;
+	a -> data = b -> data;
+	b -> data = tmp;
+
+
+}
+void Bubble_Sort(ND **node)
+{
+	ND *tmp;
+	ND *curr = *node;
+	ND *prev = *node;
+	ND *tail = NULL;
+
+	while(*node != tail){
+		curr = *node;
+		prev = *node;
+		while(curr && curr -> next && curr -> next != tail){
+			if(curr -> data > curr -> next -> data){
+				tmp = curr -> next;
+				curr -> next = tmp -> next;
+				tmp -> next = curr;
+				if(curr == head){
+					*node = tmp;
+					prev = tmp;
+				}
+				else{
+					prev -> next = tmp;
+					prev = prev -> next;
+				}
+			}
+			else{
+				if(curr != *node)
+					prev = prev -> next;
+				curr = curr -> next;
+			}
+		}
+		tail = curr;
+	}
 }
