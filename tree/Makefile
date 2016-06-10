@@ -5,6 +5,6 @@ make: $(OBJS1)
 	gcc -o bst $(OBJS1) $(LIBS)
 
 clean:
-	rm -f bst
+	rm -f bst $(OBJS1)
 	
  
