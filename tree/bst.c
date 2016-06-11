@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define max(x,y) ((x) >= (y)? (x) : (y))
+
 typedef struct _Node{
 	int value;
 	struct _Node *left;
@@ -129,11 +131,14 @@ int depth_tree(Node *temp)
 	if(temp == 0)
 		return 0;
 	
-	l_child = depth_tree(temp -> left);
+	/*l_child = depth_tree(temp -> left);
 	r_child = depth_tree(temp -> right);
 
 	if(l_child > r_child)
 		return l_child +1;
 	
-	return r_child+1;
+	return r_child+1;*/
+	
+	return 1+max(depth_tree(temp->left), depth_tree(temp->right));
+
 }
