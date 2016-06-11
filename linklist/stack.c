@@ -4,6 +4,7 @@
 typedef struct Node{
 	int data;
 	struct Node *next;
+	int cur_max;
 }node;
 
 void push(node **nd, int data);
@@ -17,20 +18,16 @@ int main()
 {
 	node *top = NULL;
 
-	push(&top, 1);
-	push(&top, 2);
-	push(&top, 3);
-	push(&top, 4);
 	push(&top, 5);
+	push(&top, 4);
+	push(&top, 2);
+	push(&top, 10);
+	push(&top, 100);
 	list(top);
 	printf("top is %d\n",stacktop(top));
 	pop(&top);
 	pop(&top);
-	pop(&top);
-	pop(&top);
 	list(top);
-	pop(&top);
-	pop(&top);
 	
 	return 0;
 
@@ -39,13 +36,22 @@ int main()
 void push(node **nd , int data)
 {
 	node *temp = (node *)malloc(sizeof(node));
-	if(nd == NULL){
+	if(temp == NULL){
 		printf("memory allocat fail");
 		exit(1);
 	}
+
+	if((*nd) == NULL)
+		temp -> cur_max = data;		
+	else if(data > (*nd) -> cur_max)
+		temp -> cur_max = data;
+	else
+		temp -> cur_max = (*nd) -> cur_max;
+	
 	temp -> data = data;
 	temp -> next = *nd;
 	*nd = temp;
+	
 }
 
 void pop(node **nd)
@@ -78,8 +84,18 @@ void list(node *nd)
 {
 	node *temp = nd;
 
+	printf("Stack is :");
 	while(temp != NULL){
 		printf("%d -> ",temp -> data);
+		temp = temp -> next;
+	}
+	printf("NULL \n");
+	
+	temp = nd;
+	
+	printf("Max Stack is : ");
+	while(temp != NULL){
+		printf("%d -> ", temp -> cur_max);
 		temp = temp -> next;
 	}
 	printf("NULL \n");
