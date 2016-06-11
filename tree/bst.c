@@ -13,7 +13,7 @@ void print_Inorder(Node *temp);
 void print_Preorder(Node *temp);
 void print_Postorder(Node *temp);
 void d_tree(Node *temp);
-
+int depth_tree(Node *temp);
 
 Node *root = 0;
 
@@ -24,7 +24,9 @@ int main()
 	Insert_Node(1); 
 	Insert_Node(2); 
 	Insert_Node(4); 
-	
+	Insert_Node(10);
+	Insert_Node(100);
+
 	printf("Inorder:"); 
 	print_Inorder(root); 	
 	printf("\n");
@@ -38,7 +40,7 @@ int main()
 	print_Postorder(root);
 	printf("\n");
 
-	
+	printf("Depth of the tree is %d\n ", depth_tree(root));
 }
 
 void Insert_Node(int value)
@@ -120,3 +122,18 @@ void d_tree(Node *temp)
 	free(temp);
 }
 
+int depth_tree(Node *temp)
+{
+	int l_child;
+	int r_child;
+	if(temp == 0)
+		return 0;
+	
+	l_child = depth_tree(temp -> left);
+	r_child = depth_tree(temp -> right);
+
+	if(l_child > r_child)
+		return l_child +1;
+	
+	return r_child+1;
+}
