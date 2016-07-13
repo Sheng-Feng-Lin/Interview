@@ -26,18 +26,11 @@ int main()
 	insert_Node(&node, 20);	
 	insert_Node(&node, 5);
 	list(node);
-	printf("link list length = %d\n",List_Length(node) );
-	printf("Is Empty = %d\n", IsEmpty(node));
 	Delete_Node(&node, 20);
-	insert_Node(&node , 100);
-	insert_Node(&node , 50);
-	Delete_Node(&node,10);
 	list(node);
-
-	Delete_Node(&node, 50);	
+	Delete_Node(&node, 5555);
 	list(node);
-	printf("link list length = %d\n",List_Length(node) );
-	printf("Is Empty = %d\n", IsEmpty(node));
+	
 	
 	return 0;
 }
@@ -72,32 +65,29 @@ void insert_Node(ND **node, int data)
 
 void Delete_Node(ND **node , int data)
 {
-	ND *temp, *temp1;
+	ND *temp;
 	temp = *node;
 	while(temp != NULL){
-		if (temp -> data == data){//remove first node
-			temp1 = temp;
-			temp -> next -> prev = NULL;
-			*node = temp-> next;
-			free(temp1);
-			break;
-		}
-		else if (temp -> next -> data == data){
-			if (temp -> next -> next == NULL){//remove last node
-				temp1 = temp -> next;
-				temp -> next = NULL;
-				tail = temp;
-				free(temp1);
-				break;
+		if (temp -> data == data){
+			if (temp -> prev == NULL){ //remove first node
+				temp -> next -> prev = temp -> prev;
+				*node = temp -> next;
+			}
+			else if (temp -> next == NULL){ // remove last node
+				temp -> prev -> next = temp -> next;
+				tail = temp -> prev;
 			}
 			else{
-				temp1 = temp -> next;
-				temp1 -> next -> prev = temp;
-				temp -> next = temp1 -> next;
-				free(temp1);
-				break;
+				temp -> prev -> next = temp -> next;
+				temp -> next -> prev = temp -> prev;
 			}
+			free(temp);
+			printf("delete success.\n");
+			break;
 		}
+		else if (temp -> next == NULL)
+			printf("delete faild. \n");
+			
 		temp = temp -> next;
 	}
 }
